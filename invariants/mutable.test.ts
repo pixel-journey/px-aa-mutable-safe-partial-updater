@@ -23,6 +23,16 @@ describe("patchMutable", () => {
     assert.equal(next.aura, true);
     assert.equal(next.nickname, "hero");
   });
+
+  it("refuses a bad key", () => {
+    assert.throws(() => patchMutable(prev, "XP", 1), /bad attribute key/);
+    assert.throws(() => patchMutable(prev, "1xp", 1), /bad attribute key/);
+  });
+
+  it("refuses non-finite numbers and long strings", () => {
+    assert.throws(() => patchMutable(prev, "xp", Number.NaN), /finite/);
+    assert.throws(() => patchMutable(prev, "nickname", "x".repeat(257)), /too long/);
+  });
 });
 
 describe("safeSetAssetData", () => {
@@ -42,10 +52,25 @@ describe("safeSetAssetData", () => {
   it("non-owner refused", () => {
     assert.throws(() => safeSetAssetData(row, "bob", "xp", 99), /only owner/);
   });
+
+  it("refuses asset id below 1", () => {
+    assert.throws(
+      () => safeSetAssetData({ ...row, assetId: 0n }, "alice", "xp", 1),
+      /bad asset id/,
+    );
+  });
 });
 
 describe("isAccidentalWipe", () => {
   it("detects dropped keys", () => {
     assert.equal(isAccidentalWipe(prev, { xp: 1 }), true);
+  });
+
+  it("empty previous is not a wipe", () => {
+    assert.equal(isAccidentalWipe({}, { xp: 1 }), false);
+  });
+
+  it("assertNoWipe throws on a partial next map", () => {
+    assert.throws(() => assertNoWipe(prev, { xp: 1 }), /wipe sibling/);
   });
 });
