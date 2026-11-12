@@ -1,12 +1,14 @@
 # Edit one mutable key without wiping the rest
 
 > **Trust:** private educational lab (Tier B)  
-> **Quest:** 022 — safe partial mutable update  
-> **Vault:** [px-contract-examples-vault](https://github.com/pixel-journey/px-contract-examples-vault)
+> **Stack:** layer 2 of 5 — [MUTABLE-STACK.md](https://github.com/pixel-journey/px-contract-examples-vault/blob/main/docs/MUTABLE-STACK.md)  
+> **Sources:** [SOURCES.md](SOURCES.md)
 
 **One-sentence goal:** Teach **full-map write** semantics: update one attribute key and **preserve every sibling**. That is the classic AtomicAssets mutable pitfall.
 
 **Real code:** `npm test`. **Does not** call AtomicAssets, serialize `ATTRIBUTE_MAP`, or write chain state.
+
+On chain, `setassetdata` replaces the stored mutable blob with a serialization of the **entire** map you pass. Omitting a key is deleting it. See the [contract](https://github.com/pinknetworkx/atomicassets-contract) and [WAX mutable-data tutorial](https://docs.wax.io/build/tutorials/howto_atomicassets/mutabledata).
 
 ## What you can learn
 
@@ -23,6 +25,7 @@
 | `invariants/mutable.test.ts` | Executed claims |
 | `EDUCATION.md` | Read, copy, edit, write the full map |
 | `SECURITY.md` | What a real `setassetdata` still needs |
+| `SOURCES.md` | Official contract and docs.wax.io links |
 
 ## What is true (executed)
 
@@ -44,30 +47,6 @@ Starting map `{ xp: 10, nickname: "hero", level: 1 }` on asset `42n` owned by `a
 4. `safeSetAssetData` requires the editor name to equal `row.owner`, and `assetId` to be a `bigint` ≥ 1.
 5. `isAccidentalWipe` is true when `previous` had keys and `next` is missing at least one of them. An empty previous map is not a wipe.
 
-```ts
-import { patchMutable, safeSetAssetData, isAccidentalWipe } from "./invariants/mutable.ts";
-
-const prev = { xp: 10, nickname: "hero", level: 1 };
-const next = patchMutable(prev, "xp", 15);
-// next.nickname === "hero"
-
-safeSetAssetData(
-  { assetId: 42n, owner: "alice", mutable: prev },
-  "alice",
-  "xp",
-  20
-);
-
-isAccidentalWipe(prev, { xp: 1 }); // true
-```
-
-## Edge cases
-
-- Adding a key is not a wipe. Dropping a key is.
-- `assertNoWipe` throws `mutable write would wipe sibling keys`. `patchMutable` itself does not drop keys; the detector exists so a bad next map can be rejected.
-- Account-name checks are a format check, not a proof the account exists.
-- The previous map is whatever the caller passed. This file does not fetch the asset row.
-
 ## Best practice and the opposite
 
 **Do** read the current mutable map, copy it, change one key, and write the full map back.  
@@ -76,21 +55,13 @@ isAccidentalWipe(prev, { xp: 1 }); // true
 **Do not** build a new object that contains only the field you wanted to change.  
 **Do not** treat a passing owner check as AtomicAssets `setassetdata`. Collection auth and schema types are not in this repo.
 
-## Live path, not shipped
+## Stack neighbors
 
-```
-previous map (caller-supplied)
-    → patchMutable / safeSetAssetData     [tested]
-    → read asset row from AtomicAssets     [not in this repo]
-    → setassetdata serialization           [not in this repo]
-```
-
-See [EDUCATION.md](EDUCATION.md) and [SECURITY.md](SECURITY.md).
-
-## Related
-
-- `px-aa-mutable-rpg-xp-and-leveling` — XP and level on a mutable map, including a partial-map wipe case
-- Vault index: `px-contract-examples-vault`
+| Layer | Repo |
+| --- | --- |
+| 1 | [px-aa-mutable-deserialize-core](https://github.com/pixel-journey/px-aa-mutable-deserialize-core) |
+| 3 | [px-aa-mutable-all-primitive-types](https://github.com/pixel-journey/px-aa-mutable-all-primitive-types) |
+| 5 | [px-aa-mutable-rpg-xp-and-leveling](https://github.com/pixel-journey/px-aa-mutable-rpg-xp-and-leveling) |
 
 ## Run
 
