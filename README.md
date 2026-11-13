@@ -6,9 +6,13 @@
 
 **One-sentence goal:** Teach **full-map write** semantics: update one attribute key and **preserve every sibling**. That is the classic AtomicAssets mutable pitfall.
 
-**Real code:** `npm test`. **Does not** call AtomicAssets, serialize `ATTRIBUTE_MAP`, or write chain state.
+**Real code:** `npm test` (unit + **sequential composition**). **Does not** call AtomicAssets, serialize `ATTRIBUTE_MAP`, or write chain state.
 
 On chain, `setassetdata` replaces the stored mutable blob with a serialization of the **entire** map you pass. Omitting a key is deleting it. See the [contract](https://github.com/pinknetworkx/atomicassets-contract) and [WAX mutable-data tutorial](https://docs.wax.io/build/tutorials/howto_atomicassets/mutabledata).
+
+## Composition note
+
+`mutable.composition.test.ts` walks sequential patches: xp → level → new aura key, all without losing nickname. A naive `{ xp: 99 }` is an accidental wipe; `patchMutable` is not. Failed owner check leaves the row unchanged for retry.
 
 ## What you can learn
 
@@ -22,7 +26,8 @@ On chain, `setassetdata` replaces the stored mutable blob with a serialization o
 | Piece | Role |
 | --- | --- |
 | `invariants/mutable.ts` | `patchMutable`, `safeSetAssetData`, `isAccidentalWipe`, `assertNoWipe` |
-| `invariants/mutable.test.ts` | Executed claims |
+| `invariants/mutable.test.ts` | Unit claims |
+| `invariants/mutable.composition.test.ts` | Multi-step wipe vs safe path |
 | `EDUCATION.md` | Read, copy, edit, write the full map |
 | `SECURITY.md` | What a real `setassetdata` still needs |
 | `SOURCES.md` | Official contract and docs.wax.io links |
@@ -38,6 +43,7 @@ Starting map `{ xp: 10, nickname: "hero", level: 1 }` on asset `42n` owned by `a
 | Owner `alice` sets `xp` to 20 | patch kept; `assertNoWipe` passes |
 | Editor `bob` | `only owner may edit` |
 | Next map is only `{ xp: 1 }` | `isAccidentalWipe` is true |
+| Sequential xp → level → aura | all prior keys still present |
 
 ## The rule, in order
 
@@ -61,6 +67,7 @@ Starting map `{ xp: 10, nickname: "hero", level: 1 }` on asset `42n` owned by `a
 | --- | --- |
 | 1 | [px-aa-mutable-deserialize-core](https://github.com/pixel-journey/px-aa-mutable-deserialize-core) |
 | 3 | [px-aa-mutable-all-primitive-types](https://github.com/pixel-journey/px-aa-mutable-all-primitive-types) |
+| 4 | [px-aa-mutable-vector-arrays-crud](https://github.com/pixel-journey/px-aa-mutable-vector-arrays-crud) |
 | 5 | [px-aa-mutable-rpg-xp-and-leveling](https://github.com/pixel-journey/px-aa-mutable-rpg-xp-and-leveling) |
 
 ## Run
