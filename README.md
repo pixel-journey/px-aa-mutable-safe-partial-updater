@@ -9,6 +9,16 @@
 
 On chain, `setassetdata` replaces the stored mutable blob with a serialization of the **entire** map you pass. Omitting a key deletes it. See the [contract](https://github.com/pinknetworkx/atomicassets-contract) and the [WAX mutable-data tutorial](https://docs.wax.io/build/tutorials/howto_atomicassets/mutabledata).
 
+## Learning materials
+
+| Doc | Role |
+| --- | --- |
+| [EDUCATION.md](EDUCATION.md) | Beginner → masterclass |
+| [WORKED-EXAMPLES.md](WORKED-EXAMPLES.md) | Concrete maps, sequential patches, auth retry |
+| [TIPS.md](TIPS.md) | Common mistakes and debugging a live wipe |
+| [SECURITY.md](SECURITY.md) | Threat model + production checklist |
+| [SOURCES.md](SOURCES.md) | Official contract, wiki, docs.wax.io |
+
 ## Composition
 
 `mutable.composition.test.ts` walks sequential patches (xp → level → aura) without losing nickname. A naive `{ xp: 99 }` is an accidental wipe; `patchMutable` is not. A failed owner check leaves the row unchanged for retry.
@@ -27,7 +37,6 @@ On chain, `setassetdata` replaces the stored mutable blob with a serialization o
 | `invariants/mutable.ts` | `patchMutable`, `safeSetAssetData`, `isAccidentalWipe`, `assertNoWipe` |
 | `invariants/mutable.test.ts` | Unit claims |
 | `invariants/mutable.composition.test.ts` | Multi-step wipe vs safe path |
-| `EDUCATION.md` / `SECURITY.md` / `SOURCES.md` | Pedagogy, threat model, official links |
 
 Starting map `{ xp: 10, nickname: "hero", level: 1 }` on asset `42n` owned by `alice`:
 
