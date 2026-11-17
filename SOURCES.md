@@ -1,22 +1,27 @@
-# Official sources
+# Sources
+
+## Official
 
 | Source | Use |
 | --- | --- |
-| [atomicassets-contract](https://github.com/pinknetworkx/atomicassets-contract) | `setassetdata` serializes the **entire** `new_mutable_data` map into `mutable_serialized_data` |
-| [Serialization wiki](https://github.com/pinknetworkx/atomicassets-contract/wiki/Serialization) | ATTRIBUTE_MAP → bytes using schema format; field id = varint(index + 4) |
-| [WAX: Modifying mutable data](https://docs.wax.io/build/tutorials/howto_atomicassets/mutabledata) | Client-side map shape and action parameters |
-| [WAX: How-To AtomicAssets](https://docs.wax.io/build/tutorials/howto_atomicassets) | Standard overview on WAX |
-| [WAX: Minting NFTs](https://docs.wax.io/build/tutorials/howto_atomicassets/mint_nft) | Initial mutable vs immutable data |
-| [WAX API reference](https://docs.wax.io/build/api-reference/) | AtomicAssets / Hyperion reads for the asset row |
+| [atomicassets-contract](https://github.com/pinknetworkx/atomicassets-contract) | `setassetdata` replaces the full mutable map |
+| [WAX How-To AtomicAssets](https://docs.wax.io/build/tutorials/howto_atomicassets) | Standard overview |
+| [Minting NFTs](https://docs.wax.io/build/tutorials/howto_atomicassets/mint_nft) | Related write path |
+| [docs.wax.io](https://docs.wax.io/) | Network docs |
+| [WAX API reference](https://docs.wax.io/build/api-reference/) | Read asset mutables off-chain |
 
-## Stack position
+## Pixel Journey
 
-Layer **2 of 5**. Previous: [deserialize-core](https://github.com/pixel-journey/px-aa-mutable-deserialize-core). Next: [all-primitive-types](https://github.com/pixel-journey/px-aa-mutable-all-primitive-types). Applied rule: [rpg-xp-and-leveling](https://github.com/pixel-journey/px-aa-mutable-rpg-xp-and-leveling). Path: [MUTABLE-STACK.md](https://github.com/pixel-journey/px-contract-examples-vault/blob/main/docs/MUTABLE-STACK.md).
+| Source | Use |
+| --- | --- |
+| [MUTABLE-STACK.md](https://github.com/pixel-journey/px-contract-examples-vault/blob/main/docs/MUTABLE-STACK.md) | Layer 1–5 order |
+| [ATOMICASSETS-V2.md](https://github.com/pixel-journey/wax-ecosystem-blueprint-catalog/blob/main/ATOMICASSETS-V2.md) | v2 notes |
 
 ## Related labs
 
-| Repo | Connection |
+| Lab | Role |
 | --- | --- |
-| [px-aa-mutable-vector-arrays-crud](https://github.com/pixel-journey/px-aa-mutable-vector-arrays-crud) | Vector elements still need full-map write |
-| [wax-atomic-template-and-schema-explorer](https://github.com/pixel-journey/wax-atomic-template-and-schema-explorer) | Byte previews for schema attributes |
-| [wax-atomicassets-v2-action-previews](https://github.com/pixel-journey/wax-atomicassets-v2-action-previews) | v2 action shapes (not mutable math) |
+| [deserialize-core](https://github.com/pixel-journey/px-aa-mutable-deserialize-core) | Bytes ↔ map |
+| [all-primitive-types](https://github.com/pixel-journey/px-aa-mutable-all-primitive-types) | Scalar kinds |
+| [vector-arrays-crud](https://github.com/pixel-journey/px-aa-mutable-vector-arrays-crud) | Vector ops |
+| [rpg-xp-and-leveling](https://github.com/pixel-journey/px-aa-mutable-rpg-xp-and-leveling) | Multi-field game rule |
