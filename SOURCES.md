@@ -4,11 +4,18 @@
 
 | Source | Use |
 | --- | --- |
-| [atomicassets-contract](https://github.com/pinknetworkx/atomicassets-contract) | `setassetdata` replaces the full mutable map |
+| [atomicassets-contract](https://github.com/pinknetworkx/atomicassets-contract) | `setassetdata` replaces the **full** mutable map |
+| [WAX: Modifying mutable data](https://docs.wax.io/build/tutorials/howto_atomicassets/mutabledata) | Action takes the ATTRIBUTE_MAP, not a patch |
 | [WAX How-To AtomicAssets](https://docs.wax.io/build/tutorials/howto_atomicassets) | Standard overview |
-| [Minting NFTs](https://docs.wax.io/build/tutorials/howto_atomicassets/mint_nft) | Related write path |
+| [Serialization wiki](https://github.com/pinknetworkx/atomicassets-contract/wiki/Serialization) | Bytes after the map is built |
 | [docs.wax.io](https://docs.wax.io/) | Network docs |
-| [WAX API reference](https://docs.wax.io/build/api-reference/) | Read asset mutables off-chain |
+
+## Product facts locked by this lab
+
+- `setassetdata` is a **full replace**. A one-key object wipes every other key on the asset.
+- `patchMutable` keeps siblings only when you pass the **real previous map**. A lied-about previous still wipes the chain row even if the pure function looks safe.
+- Patch at the **map** layer, then serialize the full result. Do not splice one field into an old blob ([deserialize-core](https://github.com/pixel-journey/px-aa-mutable-deserialize-core)).
+- This lab does not broadcast. The test is the rule for the map merge.
 
 ## Pixel Journey
 
