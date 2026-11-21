@@ -1,6 +1,6 @@
 # Sources
 
-## Official
+## Official AtomicAssets / WAX
 
 | Source | Use |
 | --- | --- |
@@ -8,7 +8,22 @@
 | [WAX: Modifying mutable data](https://docs.wax.io/build/tutorials/howto_atomicassets/mutabledata) | Action takes the ATTRIBUTE_MAP, not a patch |
 | [WAX How-To AtomicAssets](https://docs.wax.io/build/tutorials/howto_atomicassets) | Standard overview |
 | [Serialization wiki](https://github.com/pinknetworkx/atomicassets-contract/wiki/Serialization) | Bytes after the map is built |
+| [atomicassets-sdk](https://github.com/atomicassets/atomicassets-sdk) | Official TS read / serialize |
 | [docs.wax.io](https://docs.wax.io/) | Network docs |
+
+## WharfKit
+
+| Source | Use |
+| --- | --- |
+| [WharfKit](https://wharfkit.com/) | SessionKit when a host signs |
+| [@wharfkit/atomicassets](https://www.npmjs.com/package/@wharfkit/atomicassets) | Asset / schema reads |
+| [wharfkit/skill](https://github.com/wharfkit/skill) | Claude Code skill — Session, Contract, patterns |
+| [@wharfkit/cli](https://www.npmjs.com/package/@wharfkit/cli) | `generate atomicassets` typed helpers |
+| [@wharfkit/starter-wax](https://www.npmjs.com/package/@wharfkit/starter-wax) | WAX SessionKit defaults |
+
+```bash
+git clone https://github.com/wharfkit/skill.git ~/.claude/skills/wharfkit
+```
 
 ## Product facts locked by this lab
 
@@ -22,6 +37,7 @@
 | Source | Use |
 | --- | --- |
 | [MUTABLE-STACK.md](https://github.com/pixel-journey/px-contract-examples-vault/blob/main/docs/MUTABLE-STACK.md) | Layer 1–5 order |
+| [WIPE-BUG.md](https://github.com/pixel-journey/px-aa-mutable-rpg-xp-and-leveling/blob/main/WIPE-BUG.md) | Teaching write-up of partial wipe |
 | [ATOMICASSETS-V2.md](https://github.com/pixel-journey/wax-ecosystem-blueprint-catalog/blob/main/ATOMICASSETS-V2.md) | v2 notes |
 
 ## Related labs
