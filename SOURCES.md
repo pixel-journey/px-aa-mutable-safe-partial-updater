@@ -9,6 +9,7 @@
 | [WAX How-To AtomicAssets](https://docs.wax.io/build/tutorials/howto_atomicassets) | Standard overview |
 | [Serialization wiki](https://github.com/pinknetworkx/atomicassets-contract/wiki/Serialization) | Bytes after the map is built |
 | [atomicassets-sdk](https://github.com/atomicassets/atomicassets-sdk) | Official TS read / serialize |
+| [atomic-knowledge](https://github.com/atomicassets/atomic-knowledge) | Pinned facts + skills `atomic-integration`, `report` |
 | [docs.wax.io](https://docs.wax.io/) | Network docs |
 
 ## WharfKit
@@ -16,7 +17,7 @@
 | Source | Use |
 | --- | --- |
 | [WharfKit](https://wharfkit.com/) | SessionKit when a host signs |
-| [@wharfkit/atomicassets](https://www.npmjs.com/package/@wharfkit/atomicassets) | Asset / schema reads |
+| [@wharfkit/atomicassets](https://www.npmjs.com/package/@wharfkit/atomicassets) | Asset / schema reads (inside wharfkit/js; standalone repo archived) |
 | [wharfkit/skill](https://github.com/wharfkit/skill) | Claude Code skill — Session, Contract, patterns |
 | [@wharfkit/cli](https://www.npmjs.com/package/@wharfkit/cli) | `generate atomicassets` typed helpers |
 | [@wharfkit/starter-wax](https://www.npmjs.com/package/@wharfkit/starter-wax) | WAX SessionKit defaults |
@@ -32,13 +33,17 @@ git clone https://github.com/wharfkit/skill.git ~/.claude/skills/wharfkit
 - Patch at the **map** layer, then serialize the full result. Do not splice one field into an old blob ([deserialize-core](https://github.com/pixel-journey/px-aa-mutable-deserialize-core)).
 - This lab does not broadcast. The test is the rule for the map merge.
 
+## Portability
+
+The wipe is the full-map replace wherever AtomicAssets is deployed (WAX, EOS Jungle, XPR, Vaulta, …). **What does not port blindly:** which ABI version is live on that chain. WAX **mainnet** is still V1-shaped for many actions until `get_abi` says otherwise; WAX **testnet** is where V2 is exercisable. Matching account names across chains does not copy the ABI.
+
 ## Pixel Journey
 
 | Source | Use |
 | --- | --- |
 | [MUTABLE-STACK.md](https://github.com/pixel-journey/px-contract-examples-vault/blob/main/docs/MUTABLE-STACK.md) | Layer 1–5 order |
 | [WIPE-BUG.md](https://github.com/pixel-journey/px-aa-mutable-rpg-xp-and-leveling/blob/main/WIPE-BUG.md) | Teaching write-up of partial wipe |
-| [ATOMICASSETS-V2.md](https://github.com/pixel-journey/wax-ecosystem-blueprint-catalog/blob/main/ATOMICASSETS-V2.md) | v2 notes |
+| [ANTELOPE-PORTABILITY.md](https://github.com/pixel-journey/px-contract-examples-vault/blob/main/docs/ANTELOPE-PORTABILITY.md) | Shared constants vs chain-local |
 
 ## Related labs
 
